@@ -24,10 +24,11 @@ export function getData(): Promise<number[]> {
  */
 export async function catchException(): Promise<string | undefined> {
     try {
-        Promise.reject(new Error('my error')).catch((error) => {
-            throw error;
-        });
-    } catch (err) {
-        return err.message;
+        const result: any = await Promise.reject(new Error('my error'));
+        if (result instanceof Error) {
+            throw result;
+        }
+    } catch (e) {
+        return e.message;
     }
 }
